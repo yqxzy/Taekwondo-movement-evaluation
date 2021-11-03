@@ -56,14 +56,15 @@
 
 **3.1 Measurement of Strength**
 
-​		Taekwondo techniques always required a large amount of muscular strength to done the Taekwondo movements such as the kicks and hand strikes, the strength of movements is also one of the important parts of evaluation during Taekwondo test. However, the measurement of strength might be hard to achieve by only using the depth camera. Depth camera is suitable and accurate to evaluate the correctness of the postures by measuring the angle, however the strength can only be evaluated depends on the speed of the movements which is inaccurate.    
+**2021.10.27**
+​		 Taekwondo techniques always required a large amount of muscular strength to done the Taekwondo movements such as the kicks and hand strikes, the strength of movements is also one of the important parts of evaluation during Taekwondo test. However, the measurement of strength might be hard to achieve by only using the depth camera. Depth camera is suitable and accurate to evaluate the correctness of the postures by measuring the angle, however the strength can only be evaluated depends on the speed of the movements which is inaccurate.    
 
 
 
 <u>**4. Progress of Work**</u>
 
 **2021.10.27**
-​		At present, we have completed data collection and processing, and implemented the evaluation part of the code, but we have not conducted debugging, so we have not determined the specific parameters in the code, but we have a relatively complete implementation idea. In the following part, we will process the obtained data more exactly, and collect the standard data with the help of the Taekwondo instructor and extract its characteristic values. Then, according to the comparison result distribution of the two groups of skeleton data, some scoring rules are formulated.
+​		 At present, we have completed data collection and processing, and implemented the evaluation part of the code, but we have not conducted debugging, so we have not determined the specific parameters in the code, but we have a relatively complete implementation idea. In the following part, we will process the obtained data more exactly, and collect the standard data with the help of the Taekwondo instructor and extract its characteristic values. Then, according to the comparison result distribution of the two groups of skeleton data, some scoring rules are formulated.
 
 
 
