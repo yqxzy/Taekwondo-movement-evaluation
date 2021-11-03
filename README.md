@@ -51,7 +51,7 @@
 
     <center>Diagram 2.1.1 Skeleton Tracking Diagram for Kinect 2.0</center>             
     
-  <u>**3. Difficulty of Work**</u>
+<u>**3. Difficulty of Work**</u>
 
 
 **3.1 Measurement of Strength**
@@ -62,6 +62,8 @@
 
 <u>**4. Progress of Work**</u>
 
+**2021.10.27**
 ​		At present, we have completed data collection and processing, and implemented the evaluation part of the code, but we have not conducted debugging, so we have not determined the specific parameters in the code, but we have a relatively complete implementation idea. In the following part, we will process the obtained data more exactly, and collect the standard data with the help of the Taekwondo instructor and extract its characteristic values. Then, according to the comparison result distribution of the two groups of skeleton data, some scoring rules are formulated.
+
 
 
