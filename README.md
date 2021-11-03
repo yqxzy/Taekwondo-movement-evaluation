@@ -49,7 +49,19 @@
 
   * Kinect 2.0 can extract 25 skeleton nodes and bone nodes would not jump easily as shown in Diagram 2.1.1.
 
-    <img src="D:\Yee_Jing\SUSTech_Academic\3_Fall\CS321_Group-Project-I\Presentation1\Kinect2.0.png" alt="Kinect2.0" style="zoom:50%;" />
-
     <center>Diagram 2.1.1 Skeleton Tracking Diagram for Kinect 2.0</center>             
+    
+  <u>**3. Difficulty of Work**</u>
+
+
+**3.1 Measurement of Strength**
+
+​		Taekwondo techniques always required a large amount of muscular strength to done the Taekwondo movements such as the kicks and hand strikes, the strength of movements is also one of the important parts of evaluation during Taekwondo test. However, the measurement of strength might be hard to achieve by only using the depth camera. Depth camera is suitable and accurate to evaluate the correctness of the postures by measuring the angle, however the strength can only be evaluated depends on the speed of the movements which is inaccurate.    
+
+
+
+<u>**4. Progress of Work**</u>
+
+​		At present, we have completed data collection and processing, and implemented the evaluation part of the code, but we have not conducted debugging, so we have not determined the specific parameters in the code, but we have a relatively complete implementation idea. In the following part, we will process the obtained data more exactly, and collect the standard data with the help of the Taekwondo instructor and extract its characteristic values. Then, according to the comparison result distribution of the two groups of skeleton data, some scoring rules are formulated.
+
 
