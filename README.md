@@ -1,5 +1,4 @@
 # Taekwondo movement evaluation
- ## **An Evaluation of Taekwondo Movements Based on Computer Vision**
 
 > Prepared by: 马成棋，王则宇，Ooi Yee Jing
 
