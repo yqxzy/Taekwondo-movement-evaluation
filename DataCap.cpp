@@ -70,7 +70,7 @@ int main(void)
     //*************************************以上为BodyFrame的读取以及Mapper做准备**************************************
 
 
-    VideoWriter outputVideo("output0.avi", CV_FOURCC('m', 'p', '4', 'v'), 30.0, frameSize, 1);
+    VideoWriter outputVideo("output0.avi", CV_FOURCC('m', 'p', '4', 'v'), 6.0, frameSize, 1);
     //创建视频文件
     if (!outputVideo.isOpened()) {
         cout << "fail to open the videowriter" << endl;
@@ -101,7 +101,7 @@ int main(void)
                 fileCount += 1;
                 string filename1 = "output" + to_string(fileCount) + ".avi";
                 //定义writer对象
-                VideoWriter outputVideo(filename1, CV_FOURCC('m', 'p', '4', 'v'), 30.0, frameSize, 1);
+                outputVideo.open(filename1, CV_FOURCC('m', 'p', '4', 'v'), 6.0, frameSize, 1);
                 //判断open writer对象是否出错
                 if (!outputVideo.isOpened()) {
                     cout << "fail to open the videowriter" << endl;
