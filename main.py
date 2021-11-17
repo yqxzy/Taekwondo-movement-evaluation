@@ -229,7 +229,15 @@ def divide(sd, sk,w, Y, l,):
     return static_list,dynamic_list
 
 
+def compare(sta_s,sta_d,s_list, d_list):
+    s_dis=[]
+    d_dis=[]
+    for i in range(sta_s):
+        s_dis.append(static_compare(sta_s[i], s_list[i].alist))
+    for i in range(sta_d):
+        d_dis.append(dynamic_compare(sta_d[i], d_list[i].alist))
 
+    return s_dis, d_dis   
 
 def static_compare(B, E):
     d = np.ones((9, 1))
