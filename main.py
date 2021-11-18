@@ -1,6 +1,3 @@
-# process the raw skeleton data
-
-# import data
 
 # frame: 0
 # 0,-0.560858,0.285851,2.47564
@@ -36,6 +33,8 @@ import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
 import csv
+
+
 
 class skeleton_nodes:
     def __init__(self, name, number):
@@ -149,9 +148,8 @@ def write(num):
 
 
 # 标准
-sd = skeleton_list()
 
-import_data('./Teakwondo_3d_actions/test4-2.txt',sd)
+
 
 
 # process
@@ -197,10 +195,12 @@ def divide(sd, sk,w, Y, l,):
     # l :正偏移量
     s_list = get_angle_list(sd)
     u_list = get_angle_list(sk)
-    d=[]
+    d={}
     d_min=1e7
-    static_list=[]
-    dynamic_list=[]
+    static_list={}
+    dynamic_list={}
+    f_s={}
+    f_e={}
     end=0
     for i in range(len(s_list)):
         for j in range(len(u_list)):
@@ -221,11 +221,13 @@ def divide(sd, sk,w, Y, l,):
                     j_e=j
                 if j<j_s:
                     j_s=j
-        static_list[i] = Action(u_list[j_s:j_e])
-        dynamic_list.append(Action(u_list[end:j_s]))
-        end=j_e
-    return static_list,dynamic_list
 
+        static_list[i] = Action(u_list[j_s:j_e])
+        dynamic_list[i]=Action(u_list[end:j_s])
+        end=j_e
+        f_s[i] = j_s
+        f_e[i] = j_e
+    return static_list,dynamic_list,f_s,f_e
 
 def compare(sta_s,sta_d,s_list, d_list):
     s_dis=[]
@@ -235,7 +237,7 @@ def compare(sta_s,sta_d,s_list, d_list):
     for i in range(sta_d):
         d_dis.append(dynamic_compare(sta_d[i], d_list[i].alist))
 
-    return s_dis, d_dis   
+    return s_dis, d_dis
 
 def static_compare(B, E):
     d = np.ones((9, 1))
@@ -246,6 +248,7 @@ def static_compare(B, E):
 
         d[k] = sum/(len(E))-B[k]
     return d
+
 
 def dynamic_compare(B, E):
     d = np.ones((9, 1))
@@ -271,47 +274,50 @@ def dynamic_compare(B, E):
     return d
 
 
-def continue_time(f_s, f_e, fps=30):
+
+# 动作持续时间
+def continue_time(f_s, f_e,fps=30):
     t_s = []
     t_d = []
 
     for i in range(len(f_s)):
         t_s[i] = (f_e[i] - f_s[i]) / fps
 
-    t_d[0] = f_s[0]
+    t_d[0]=f_s[0]
     for i in range(len(f_s) - 1):
-        t_d[i + 1] = (f_s[i + 1] - f_e[i]) / fps
+        t_d[i+1] = (f_s[i + 1] - f_e[i]) / fps
 
-    return t_s, t_d
+    return t_s,t_d
 
 
-def mean_palstance(E, B, fps=30):
+# 动态动作平均角速度比较
+def mean_palstance_compare(E, B, fps=30):
     w = []
     e = []
     for i in range(len(B[0])):
         w[i] = 0
         for j in range(len(B) - 1):
-            w[i] += fps * (B[j + 1][i] - B[j][i])
-        w[i] = w[i] / (len(B) - 1)
+            w[i] += fps*(B[j+1][i] - B[j][i])
+        w[i] = w[i]/(len(B) - 1)
 
     for i in range(len(E[0])):
         e[i] = 0
         for j in range(len(E) - 1):
-            e[i] += fps * (E[j + 1][i] - E[j][i])
-        e[i] = e[i] / (len(E) - 1) - w[i]
+            e[i] += fps*(E[j+1][i] - E[j][i])
+        e[i] = e[i]/(len(E) - 1) - w[i]
 
     return e
 
-
 if __name__ == '__main__':
-    s1 = skeleton_list()
-    fp = import_data('./Teakwondo_3d_actions/test4-2.txt', s1.sk)
+    s_user = skeleton_list()
+    fp = import_data('./Teakwondo_3d_actions/test2.txt', s_user.sk)
     p = 0
-    # print(sk[p].x)
     write(fp)
-    # sk[p].x = median_filtering(sk[p].x, fp)
-    list_0 = get_angle_list(s1.sk)
-    fp2 = import_data('./Teakwondo_3d_actions/test4-3.txt', s1.sk)
-    list_1 = get_angle_list(s1.sk)
-    d_ = dynamic_compare(list_0, list_1)
-    print(d_)
+    s_key =skeleton_list()
+    fp2 = import_data('./Teakwondo_3d_actions/pictureNode0.txt', s_key.sk)
+    w=[1,1,1,1,1,1,1,1,1]
+    print(s_key.sk[0].x)
+    static_list,dynamic_list,f_s,f_e=divide(s_key.sk,s_user.sk,w,100,10)
+    print(f_s)
+    print(f_e)
+
