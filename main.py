@@ -36,8 +36,6 @@ import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
 import csv
-import action
-
 
 class skeleton_nodes:
     def __init__(self, name, number):
@@ -271,6 +269,38 @@ def dynamic_compare(B, E):
 
         d[k] = G[len(E) - 1][len(B) - 1] / (len(B) + len(E))
     return d
+
+
+def continue_time(f_s, f_e, fps=30):
+    t_s = []
+    t_d = []
+
+    for i in range(len(f_s)):
+        t_s[i] = (f_e[i] - f_s[i]) / fps
+
+    t_d[0] = f_s[0]
+    for i in range(len(f_s) - 1):
+        t_d[i + 1] = (f_s[i + 1] - f_e[i]) / fps
+
+    return t_s, t_d
+
+
+def mean_palstance(E, B, fps=30):
+    w = []
+    e = []
+    for i in range(len(B[0])):
+        w[i] = 0
+        for j in range(len(B) - 1):
+            w[i] += fps * (B[j + 1][i] - B[j][i])
+        w[i] = w[i] / (len(B) - 1)
+
+    for i in range(len(E[0])):
+        e[i] = 0
+        for j in range(len(E) - 1):
+            e[i] += fps * (E[j + 1][i] - E[j][i])
+        e[i] = e[i] / (len(E) - 1) - w[i]
+
+    return e
 
 
 if __name__ == '__main__':

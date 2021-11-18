@@ -70,7 +70,7 @@ int main(void)
     //*************************************以上为BodyFrame的读取以及Mapper做准备**************************************
 
 
-    VideoWriter outputVideo("output0.avi", CV_FOURCC('m', 'p', '4', 'v'), 6.0, frameSize, 1);
+    VideoWriter outputVideo("output0.mp4", CV_FOURCC('D', 'I', 'V', 'X'), 6.0, frameSize, 1);
     //创建视频文件
     if (!outputVideo.isOpened()) {
         cout << "fail to open the videowriter" << endl;
@@ -88,8 +88,10 @@ int main(void)
 
     int frame = 0;
     int fileCount = 0;
+    int pictureCount = 0;
+    bool pictureFlag = 0;
     bool startFlag = 1;//初始状态为录制中
-    
+
     while (1)
     {
         if (_kbhit())
@@ -97,11 +99,11 @@ int main(void)
             int m = _getch();
 
             if (m == 32 && startFlag == 0) // 按空格开始
-            {   
+            {
                 fileCount += 1;
-                string filename1 = "output" + to_string(fileCount) + ".avi";
+                string filename1 = "output" + to_string(fileCount) + ".mp4";
                 //定义writer对象
-                outputVideo.open(filename1, CV_FOURCC('m', 'p', '4', 'v'), 6.0, frameSize, 1);
+                outputVideo.open(filename1, CV_FOURCC('D', 'I', 'V', 'X'), 6.0, frameSize, 1);
                 //判断open writer对象是否出错
                 if (!outputVideo.isOpened()) {
                     cout << "fail to open the videowriter" << endl;
@@ -119,6 +121,11 @@ int main(void)
                 VideoWriter outputVideo;
                 ofs.close();
                 startFlag = 0;
+            }
+
+            if (m == 49) //按1拍照
+            {
+                pictureFlag = 1;
             }
 
         }
@@ -141,7 +148,7 @@ int main(void)
                 {
                     Joint   myJointArr[JointType_Count];
 
-                    if (myBodyArr[i]->GetJoints(JointType_Count, myJointArr) == S_OK) //如果侦测到就把关节数据输入到数组并画图 
+                    if (myBodyArr[i]->GetJoints(JointType_Count, myJointArr) == S_OK) //如果侦测到就把关节数据输入到数组并画图
                     {
                         if (startFlag)//如果录制中，就写入骨架坐标
                         {
@@ -173,7 +180,37 @@ int main(void)
                             ofs << "24," << myJointArr[24].Position.X << "," << myJointArr[24].Position.Y << "," << myJointArr[24].Position.Z << endl;
 
                         }
-                 
+                        if (pictureFlag) {
+                            ofstream ofs1;//创建骨架节点坐标文件
+                            ofs1.open("pictureNode"+ to_string(pictureCount) + ".txt", ios::out);
+                            ofs1 << "0," << myJointArr[0].Position.X << "," << myJointArr[0].Position.Y << "," << myJointArr[0].Position.Z << endl;
+                            ofs1 << "1," << myJointArr[1].Position.X << "," << myJointArr[1].Position.Y << "," << myJointArr[1].Position.Z << endl;
+                            ofs1 << "2," << myJointArr[2].Position.X << "," << myJointArr[2].Position.Y << "," << myJointArr[2].Position.Z << endl;
+                            ofs1 << "3," << myJointArr[3].Position.X << "," << myJointArr[3].Position.Y << "," << myJointArr[3].Position.Z << endl;
+                            ofs1 << "4," << myJointArr[4].Position.X << "," << myJointArr[4].Position.Y << "," << myJointArr[4].Position.Z << endl;
+                            ofs1 << "5," << myJointArr[5].Position.X << "," << myJointArr[5].Position.Y << "," << myJointArr[5].Position.Z << endl;
+                            ofs1 << "6," << myJointArr[6].Position.X << "," << myJointArr[6].Position.Y << "," << myJointArr[6].Position.Z << endl;
+                            ofs1 << "7," << myJointArr[7].Position.X << "," << myJointArr[7].Position.Y << "," << myJointArr[7].Position.Z << endl;
+                            ofs1 << "8," << myJointArr[8].Position.X << "," << myJointArr[8].Position.Y << "," << myJointArr[8].Position.Z << endl;
+                            ofs1 << "9," << myJointArr[9].Position.X << "," << myJointArr[9].Position.Y << "," << myJointArr[9].Position.Z << endl;
+                            ofs1 << "10," << myJointArr[10].Position.X << "," << myJointArr[10].Position.Y << "," << myJointArr[10].Position.Z << endl;
+                            ofs1 << "11," << myJointArr[11].Position.X << "," << myJointArr[11].Position.Y << "," << myJointArr[11].Position.Z << endl;
+                            ofs1 << "12," << myJointArr[12].Position.X << "," << myJointArr[12].Position.Y << "," << myJointArr[12].Position.Z << endl;
+                            ofs1 << "13," << myJointArr[13].Position.X << "," << myJointArr[13].Position.Y << "," << myJointArr[13].Position.Z << endl;
+                            ofs1 << "14," << myJointArr[14].Position.X << "," << myJointArr[14].Position.Y << "," << myJointArr[14].Position.Z << endl;
+                            ofs1 << "15," << myJointArr[15].Position.X << "," << myJointArr[15].Position.Y << "," << myJointArr[15].Position.Z << endl;
+                            ofs1 << "16," << myJointArr[16].Position.X << "," << myJointArr[16].Position.Y << "," << myJointArr[16].Position.Z << endl;
+                            ofs1 << "17," << myJointArr[17].Position.X << "," << myJointArr[17].Position.Y << "," << myJointArr[17].Position.Z << endl;
+                            ofs1 << "18," << myJointArr[18].Position.X << "," << myJointArr[18].Position.Y << "," << myJointArr[18].Position.Z << endl;
+                            ofs1 << "19," << myJointArr[19].Position.X << "," << myJointArr[19].Position.Y << "," << myJointArr[19].Position.Z << endl;
+                            ofs1 << "20," << myJointArr[20].Position.X << "," << myJointArr[20].Position.Y << "," << myJointArr[20].Position.Z << endl;
+                            ofs1 << "21," << myJointArr[21].Position.X << "," << myJointArr[21].Position.Y << "," << myJointArr[21].Position.Z << endl;
+                            ofs1 << "22," << myJointArr[22].Position.X << "," << myJointArr[22].Position.Y << "," << myJointArr[22].Position.Z << endl;
+                            ofs1 << "23," << myJointArr[23].Position.X << "," << myJointArr[23].Position.Y << "," << myJointArr[23].Position.Z << endl;
+                            ofs1 << "24," << myJointArr[24].Position.X << "," << myJointArr[24].Position.Y << "," << myJointArr[24].Position.Z << endl;
+
+                        }
+
                         draw(copy, myJointArr[JointType_Head], myJointArr[JointType_Neck], myMapper);
                         draw(copy, myJointArr[JointType_Neck], myJointArr[JointType_SpineShoulder], myMapper);
 
@@ -219,6 +256,12 @@ int main(void)
         if (startFlag) {
             std::printf("frame: %d\n", frame);
 
+        }
+
+        if (pictureFlag) {
+            cv::imwrite("picure" + to_string(pictureCount) + ".jpg", copy);
+            pictureCount += 1;
+            pictureFlag = 0;
         }
 
         cv::Mat curVideo;
