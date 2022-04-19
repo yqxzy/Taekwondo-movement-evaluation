@@ -100,11 +100,11 @@ def mean_filtering(list, row):
 
     list = list[0:row - 1]
 
-    t = pd.read_csv(filepath_or_buffer='test.csv', header=0, names=['fsp', 'coordinate'],
+    t = pd.read_csv(filepath_or_buffer='tests.csv', header=0, names=['fsp', 'coordinate'],
                     dtype={'fsp': np.int, 'coordinate': np.float})
 
     save = pd.DataFrame({'fsp': t['fsp'].values, 'coordinate': list})
-    save.to_csv('smooth_' + 'test.csv')
+    save.to_csv('smooth_' + 'tests.csv')
 
     plt.plot((t['fsp'].values).tolist(), list_, label='original data')
     plt.plot((t['fsp'].values).tolist(), list, label='smoothed data')
@@ -125,11 +125,11 @@ def median_filtering(list, row):
         list[j + start - 1] = A[start]
     list = list[0:row - 1]
 
-    t = pd.read_csv(filepath_or_buffer='test.csv', header=0, names=['fsp', 'coordinate'],
+    t = pd.read_csv(filepath_or_buffer='tests.csv', header=0, names=['fsp', 'coordinate'],
                     dtype={'fsp': np.int, 'coordinate': np.float})
 
     save = pd.DataFrame({'fsp': t['fsp'].values, 'coordinate': list})
-    save.to_csv('smooth_' + 'test.csv')
+    save.to_csv('smooth_' + 'tests.csv')
 
     plt.plot((t['fsp'].values).tolist(), list_, label='original data')
     plt.plot((t['fsp'].values).tolist(), list, label='smoothed data')
@@ -140,7 +140,7 @@ def median_filtering(list, row):
 
 
 def write(num):
-    f = open('test.csv', 'w', encoding='utf-8')
+    f = open('tests.csv', 'w', encoding='utf-8')
     csv_writer = csv.writer(f)
     for i in range(num):
         csv_writer.writerow([i, 0.0])
