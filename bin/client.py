@@ -1,22 +1,19 @@
+import ctypes
+import sys
 import time
+from socket import *
 
+import cv2
 import numpy
 import pygame
 from PIL import Image
-from pykinect2 import PyKinectV2
-from pykinect2.PyKinectV2 import *
 from pykinect2 import PyKinectRuntime
-
-import ctypes
-import _ctypes
-import sys
-import cv2
-from matplotlib import pyplot as plt
+from pykinect2 import PyKinectV2
 
 if sys.hexversion >= 0x03000000:
-    import _thread as thread
+    pass
 else:
-    import thread
+    pass
 
 # colors for drawing different bodies
 SKELETON_COLORS = [pygame.color.THECOLORS["red"],
@@ -28,30 +25,27 @@ SKELETON_COLORS = [pygame.color.THECOLORS["red"],
                    pygame.color.THECOLORS["violet"]]
 
 
-class KinectRuntime(object):
+class KinectClient(object):
     def __init__(self):
-        self.video = None
         pygame.init()
         self._clock = pygame.time.Clock()
         self._done = False
         self._infoObject = pygame.display.Info()
         self._screen = pygame.display.set_mode((self._infoObject.current_w >> 1, self._infoObject.current_h >> 1),
                                                pygame.HWSURFACE | pygame.DOUBLEBUF | pygame.RESIZABLE, 32)
-        pygame.display.set_caption("Kinect for Windows v2 Body Game")
+        pygame.display.set_caption("Taekwondo-movement-evaluation")
         self._clock = pygame.time.Clock()
         self._kinect = PyKinectRuntime.PyKinectRuntime(
             PyKinectV2.FrameSourceTypes_Color | PyKinectV2.FrameSourceTypes_Infrared | PyKinectV2.FrameSourceTypes_Body)
         self._frame_surface = pygame.Surface(
             (self._kinect.color_frame_desc.Width, self._kinect.color_frame_desc.Height), 0, 32)
         self._bodies = None
-        self._text_file = open('1.txt', mode='w')
-        # self._fourcc = cv2.VideoWriter_fourcc('M', 'P', '4', '2')
-        # self._fps = 30
-        # self._size = cv2.CAP_PROP_FRAME_WIDTH,cv2.CAP_PROP_FRAME_HEIGHT
-        # self._outVideo = cv2.VideoWriter('saveDir.avi', self._fourcc, self._fps, self._size)
-        self.file_num = 0
-        self.pic_num = 0
-        self.start = False
+        self.sock = socket(AF_INET, SOCK_STREAM)
+        try:
+            self.sock.connect(('127.0.0.1', 1111))
+            print('Connected')
+        except Exception as e:
+            print('Connection failed: ', e)
 
     def draw_body_bone(self, joints, jointPoints, color, joint0, joint1):
         joint0State = joints[joint0].TrackingState;
@@ -76,67 +70,69 @@ class KinectRuntime(object):
 
     def draw_body(self, joints, jointPoints, color):
         # save position
-        if self.start:
-            self._text_file.write(
+        data = ""
+        data += (
                 "%f,%f,%f,%d\n" % (
                 joints[0].Position.x, joints[0].Position.y, joints[0].Position.z, joints[0].TrackingState))
-            self._text_file.write(
+        data += (
                 "%f,%f,%f,%d\n" % (
                 joints[1].Position.x, joints[1].Position.y, joints[1].Position.z, joints[1].TrackingState))
-            self._text_file.write(
+        data += (
                 "%f,%f,%f,%d\n" % (
                 joints[2].Position.x, joints[2].Position.y, joints[2].Position.z, joints[2].TrackingState))
-            self._text_file.write(
+        data += (
                 "%f,%f,%f,%d\n" % (
                 joints[3].Position.x, joints[3].Position.y, joints[3].Position.z, joints[3].TrackingState))
-            self._text_file.write(
+        data += (
                 "%f,%f,%f,%d\n" % (
                 joints[4].Position.x, joints[4].Position.y, joints[4].Position.z, joints[4].TrackingState))
-            self._text_file.write(
+        data += (
                 "%f,%f,%f,%d\n" % (
                 joints[5].Position.x, joints[5].Position.y, joints[5].Position.z, joints[5].TrackingState))
-            self._text_file.write(
+        data += (
                 "%f,%f,%f,%d\n" % (
                 joints[6].Position.x, joints[6].Position.y, joints[6].Position.z, joints[6].TrackingState))
-            self._text_file.write(
+        data += (
                 "%f,%f,%f,%d\n" % (
                 joints[7].Position.x, joints[7].Position.y, joints[7].Position.z, joints[7].TrackingState))
-            self._text_file.write(
+        data += (
                 "%f,%f,%f,%d\n" % (
                 joints[8].Position.x, joints[8].Position.y, joints[8].Position.z, joints[8].TrackingState))
-            self._text_file.write(
+        data += (
                 "%f,%f,%f,%d\n" % (
                 joints[9].Position.x, joints[9].Position.y, joints[9].Position.z, joints[9].TrackingState))
-            self._text_file.write("%f,%f,%f,%d\n" % (
+        data += ("%f,%f,%f,%d\n" % (
                 joints[10].Position.x, joints[10].Position.y, joints[10].Position.z, joints[10].TrackingState))
-            self._text_file.write("%f,%f,%f,%d\n" % (
+        data += ("%f,%f,%f,%d\n" % (
                 joints[11].Position.x, joints[11].Position.y, joints[11].Position.z, joints[11].TrackingState))
-            self._text_file.write("%f,%f,%f,%d\n" % (
+        data += ("%f,%f,%f,%d\n" % (
                 joints[12].Position.x, joints[12].Position.y, joints[12].Position.z, joints[12].TrackingState))
-            self._text_file.write("%f,%f,%f,%d\n" % (
+        data += ("%f,%f,%f,%d\n" % (
                 joints[13].Position.x, joints[13].Position.y, joints[13].Position.z, joints[13].TrackingState))
-            self._text_file.write("%f,%f,%f,%d\n" % (
+        data += ("%f,%f,%f,%d\n" % (
                 joints[14].Position.x, joints[14].Position.y, joints[14].Position.z, joints[14].TrackingState))
-            self._text_file.write("%f,%f,%f,%d\n" % (
+        data += ("%f,%f,%f,%d\n" % (
                 joints[15].Position.x, joints[15].Position.y, joints[15].Position.z, joints[15].TrackingState))
-            self._text_file.write("%f,%f,%f,%d\n" % (
+        data += ("%f,%f,%f,%d\n" % (
                 joints[16].Position.x, joints[16].Position.y, joints[16].Position.z, joints[16].TrackingState))
-            self._text_file.write("%f,%f,%f,%d\n" % (
+        data += ("%f,%f,%f,%d\n" % (
                 joints[17].Position.x, joints[17].Position.y, joints[17].Position.z, joints[17].TrackingState))
-            self._text_file.write("%f,%f,%f,%d\n" % (
+        data += ("%f,%f,%f,%d\n" % (
                 joints[18].Position.x, joints[18].Position.y, joints[18].Position.z, joints[18].TrackingState))
-            self._text_file.write("%f,%f,%f,%d\n" % (
+        data += ("%f,%f,%f,%d\n" % (
                 joints[19].Position.x, joints[19].Position.y, joints[19].Position.z, joints[19].TrackingState))
-            self._text_file.write("%f,%f,%f,%d\n" % (
+        data += ("%f,%f,%f,%d\n" % (
                 joints[20].Position.x, joints[20].Position.y, joints[20].Position.z, joints[20].TrackingState))
-            self._text_file.write("%f,%f,%f,%d\n" % (
+        data += ("%f,%f,%f,%d\n" % (
                 joints[21].Position.x, joints[21].Position.y, joints[21].Position.z, joints[21].TrackingState))
-            self._text_file.write("%f,%f,%f,%d\n" % (
+        data += ("%f,%f,%f,%d\n" % (
                 joints[22].Position.x, joints[22].Position.y, joints[22].Position.z, joints[22].TrackingState))
-            self._text_file.write("%f,%f,%f,%d\n" % (
+        data += ("%f,%f,%f,%d\n" % (
                 joints[23].Position.x, joints[23].Position.y, joints[23].Position.z, joints[23].TrackingState))
-            self._text_file.write("%f,%f,%f,%d\n" % (
+        data += ("%f,%f,%f,%d\n" % (
                 joints[24].Position.x, joints[24].Position.y, joints[24].Position.z, joints[24].TrackingState))
+
+        self.sock.send(data.encode())
 
         # Torso
         self.draw_body_bone(joints, jointPoints, color, PyKinectV2.JointType_Head, PyKinectV2.JointType_Neck);
@@ -203,25 +199,6 @@ class KinectRuntime(object):
                     self._screen = pygame.display.set_mode(event.dict['size'],
                                                            pygame.HWSURFACE | pygame.DOUBLEBUF | pygame.RESIZABLE, 32)
 
-                elif event.type == pygame.KEYDOWN:
-                    if event.key == pygame.K_RETURN:  # 按回車開始
-                        print("Start!")
-                        self.start = True
-                        fps = 30
-                        size = self._screen.get_size()
-                        file_path = str(int(time.time())) + ".avi"  # 导出路径
-                        fourcc = cv2.VideoWriter_fourcc('I', '4', '2', '0')
-                        self.video = cv2.VideoWriter(file_path, fourcc, fps, size)
-                    if event.key == pygame.K_SPACE:  # 按空格結束
-                        print("Stop!")
-                        self.start = False
-                        self._text_file.close()
-                        self.video.release()
-                    if event.key == pygame.K_p:  # 按P拍照
-                        fname = "pic_%d.png" % self.pic_num
-                        pygame.image.save(self._screen, fname)
-                        self.file_num = self.file_num + 1
-
             # --- Game logic should go here
 
             # --- Getting frames and drawing
@@ -256,13 +233,6 @@ class KinectRuntime(object):
             surface_to_draw = None
             pygame.display.update()
 
-            if self.start:
-                imagestring = pygame.image.tostring(self._screen.subsurface(0, 0, self._screen.get_width(), self._screen.get_height()), "RGB")
-                pilImage = Image.frombytes("RGB", self._screen.get_size(), imagestring)
-                img = cv2.cvtColor(numpy.asarray(pilImage), cv2.COLOR_RGB2BGR)
-
-                self.video.write(img)  # 把图片写进视频
-
             # --- Go ahead and update the screen with what we've drawn.
             pygame.display.flip()
 
@@ -271,9 +241,13 @@ class KinectRuntime(object):
 
         # Close our Kinect sensor, close the window and quit.
         self._kinect.close()
+        self.sock.close()
         pygame.quit()
 
 
-__main__ = "Kinect v2 Body Game"
-game = KinectRuntime();
+__main__ = "TME"
+
+game = KinectClient();
 game.run();
+
+
