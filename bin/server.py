@@ -234,8 +234,8 @@ class KinectServer(object):
                             self.video.release()
                         if event.key == pygame.K_p:  # 按P拍照
                             pic_name = "pic_%d.png" % self.pic_num
-                            bone_1 = "pic_%d_1.txt" % self.pic_num
-                            bone_2 = "pic_%d_2.txt" % self.pic_num
+                            bone_1 = "Snaps/pic_%d_1.txt" % self.pic_num
+                            bone_2 = "Snaps/8pic_%d_2.txt" % self.pic_num
                             pygame.image.save(self._screen, pic_name)
                             self.bone_file_1 = open(bone_1, mode='w')
                             self.bone_file_2 = open(bone_2, mode='w')
