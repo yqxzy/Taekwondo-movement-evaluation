@@ -41,11 +41,30 @@ def score_act1(frame, data, angle_list):
     return score_list
 
 
-def score_act2():
+def score_act2(frame, data, angle_list):
     score_list = []
 
-    return score_list
+    # 1.左手肩部，右手腰部
+    wrist_x, wrist_y = data[frame[0], 8, 0], (data[frame[0], 0, 0] + data[frame[0], 1, 0]) / 2 - 0.05
+    m = 0
+    if compute_difference(data[frame[0], 11, :], data[frame[0], 4, :]) > 0.1:
+        m = -0.1
+    if math.abs(data[frame[0], 7, 0] - wrist_x) > 0.05 or math.abs(data[frame[0], 7, 1] - wrist_y) > 0.1:
+        m = m - 0.1
 
+    score_list.append(m)
+
+    # 2. 右手(右)腰部, 左手角度, 两脚隔一个脚长
+    wrist_x, wrist_y = data[frame[1], 4, 0], (data[frame[1], 0, 0] + data[frame[1], 1, 0]) / 2 - 0.05
+    m = 0
+    if math.abs(data[frame[1], 7, 0] - wrist_x) > 0.05 or math.abs(data[frame[1], 7, 1] - wrist_y) > 0.1:
+        m = - 0.1
+    if data[frame[1], 19, 0] - data[frame[1], 15, 0] > 0.3 or data[frame[1], 19, 0] - data[frame[1], 15, 0] < 0.2:
+        m -= 0.1
+    # if
+    score_list.append(m)
+
+    return score_list
 
 def score_act3(frame, data, angle_list):
     score_list = []
@@ -80,4 +99,23 @@ def score_act3(frame, data, angle_list):
 def score_act4(frame, data, angle_list):
     score_list = []
 
+    # 1. 脚不变，手
+    wrist_x, wrist_y = data[frame[0], 4, 0], (data[frame[0], 0, 0] + data[frame[0], 1, 0]) / 2 - 0.05
+    m = 0
+    if compute_difference(data[frame[0], 7, :], data[frame[0], 8, :]) > 0.1:
+        m = -0.1
+    if math.abs(data[frame[0], 11, 0] - wrist_x) > 0.05 or math.abs(data[frame[0], 11, 1] - wrist_y) > 0.1:
+        m = m - 0.1
+    score_list.append(m)
+
+    # 2. 左手(右)腰部, 右手角度, 两脚隔一个脚长
+    wrist_x, wrist_y = data[frame[1], 8, 0], (data[frame[1], 0, 0] + data[frame[1], 1, 0]) / 2 - 0.05
+    m = 0
+    if math.abs(data[frame[1], 11, 0] - wrist_x) > 0.05 or math.abs(data[frame[1], 11, 1] - wrist_y) > 0.1:
+        m = - 0.1
+    if data[frame[1], 15, 0] - data[frame[1], 15, 0] > 0.3 or data[frame[1], 19, 0] - data[frame[1], 15, 0] < 0.2:
+        m -= 0.1
+
+    score_list.append(m)
     return score_list
+
