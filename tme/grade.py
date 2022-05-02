@@ -67,6 +67,7 @@ def score_act2(frame, data, angle_list):
 
     return score_list
 
+
 def score_act3(frame, data, angle_list):
     score_list = []
 
@@ -120,4 +121,3 @@ def score_act4(frame, data, angle_list):
 
     score_list.append(m)
     return score_list
-
