@@ -6,9 +6,9 @@ w = np.ones(key_num)
 
 
 def compute_difference(data1, data2):
-    l = len(data1)
-    for i in range(l):
-        dif = dif + (data1[i, 0] - data2[i, 0]) ** 2 * w[i]
+    dif = 0.0
+    for i in range(3):
+        dif = dif + (data1[i] - data2[i]) ** 2 * w[i]
     return dif
 
 
