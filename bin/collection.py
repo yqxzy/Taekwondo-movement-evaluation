@@ -52,6 +52,7 @@ class KinectRuntime(object):
         self.file_num = 0
         self.pic_num = 0
         self.start = False
+        self.frame = ""
 
     def draw_body_bone(self, joints, jointPoints, color, joint0, joint1):
         joint0State = joints[joint0].TrackingState;
@@ -76,67 +77,71 @@ class KinectRuntime(object):
 
     def draw_body(self, joints, jointPoints, color):
         # save position
+        self.frame = ""
+
+        self.frame += (
+                "%f,%f,%f,%d\n" % (
+            joints[0].Position.x, joints[0].Position.y, joints[0].Position.z, joints[0].TrackingState))
+        self.frame += (
+                "%f,%f,%f,%d\n" % (
+            joints[1].Position.x, joints[1].Position.y, joints[1].Position.z, joints[1].TrackingState))
+        self.frame += (
+                "%f,%f,%f,%d\n" % (
+            joints[2].Position.x, joints[2].Position.y, joints[2].Position.z, joints[2].TrackingState))
+        self.frame += (
+                "%f,%f,%f,%d\n" % (
+            joints[3].Position.x, joints[3].Position.y, joints[3].Position.z, joints[3].TrackingState))
+        self.frame += (
+                "%f,%f,%f,%d\n" % (
+            joints[4].Position.x, joints[4].Position.y, joints[4].Position.z, joints[4].TrackingState))
+        self.frame += (
+                "%f,%f,%f,%d\n" % (
+            joints[5].Position.x, joints[5].Position.y, joints[5].Position.z, joints[5].TrackingState))
+        self.frame += (
+                "%f,%f,%f,%d\n" % (
+            joints[6].Position.x, joints[6].Position.y, joints[6].Position.z, joints[6].TrackingState))
+        self.frame += (
+                "%f,%f,%f,%d\n" % (
+            joints[7].Position.x, joints[7].Position.y, joints[7].Position.z, joints[7].TrackingState))
+        self.frame += (
+                "%f,%f,%f,%d\n" % (
+            joints[8].Position.x, joints[8].Position.y, joints[8].Position.z, joints[8].TrackingState))
+        self.frame += (
+                "%f,%f,%f,%d\n" % (
+            joints[9].Position.x, joints[9].Position.y, joints[9].Position.z, joints[9].TrackingState))
+        self.frame += ("%f,%f,%f,%d\n" % (
+            joints[10].Position.x, joints[10].Position.y, joints[10].Position.z, joints[10].TrackingState))
+        self.frame += ("%f,%f,%f,%d\n" % (
+            joints[11].Position.x, joints[11].Position.y, joints[11].Position.z, joints[11].TrackingState))
+        self.frame += ("%f,%f,%f,%d\n" % (
+            joints[12].Position.x, joints[12].Position.y, joints[12].Position.z, joints[12].TrackingState))
+        self.frame += ("%f,%f,%f,%d\n" % (
+            joints[13].Position.x, joints[13].Position.y, joints[13].Position.z, joints[13].TrackingState))
+        self.frame += ("%f,%f,%f,%d\n" % (
+            joints[14].Position.x, joints[14].Position.y, joints[14].Position.z, joints[14].TrackingState))
+        self.frame += ("%f,%f,%f,%d\n" % (
+            joints[15].Position.x, joints[15].Position.y, joints[15].Position.z, joints[15].TrackingState))
+        self.frame += ("%f,%f,%f,%d\n" % (
+            joints[16].Position.x, joints[16].Position.y, joints[16].Position.z, joints[16].TrackingState))
+        self.frame += ("%f,%f,%f,%d\n" % (
+            joints[17].Position.x, joints[17].Position.y, joints[17].Position.z, joints[17].TrackingState))
+        self.frame += ("%f,%f,%f,%d\n" % (
+            joints[18].Position.x, joints[18].Position.y, joints[18].Position.z, joints[18].TrackingState))
+        self.frame += ("%f,%f,%f,%d\n" % (
+            joints[19].Position.x, joints[19].Position.y, joints[19].Position.z, joints[19].TrackingState))
+        self.frame += ("%f,%f,%f,%d\n" % (
+            joints[20].Position.x, joints[20].Position.y, joints[20].Position.z, joints[20].TrackingState))
+        self.frame += ("%f,%f,%f,%d\n" % (
+            joints[21].Position.x, joints[21].Position.y, joints[21].Position.z, joints[21].TrackingState))
+        self.frame += ("%f,%f,%f,%d\n" % (
+            joints[22].Position.x, joints[22].Position.y, joints[22].Position.z, joints[22].TrackingState))
+        self.frame += ("%f,%f,%f,%d\n" % (
+            joints[23].Position.x, joints[23].Position.y, joints[23].Position.z, joints[23].TrackingState))
+        self.frame += ("%f,%f,%f,%d\n" % (
+            joints[24].Position.x, joints[24].Position.y, joints[24].Position.z, joints[24].TrackingState))
+
         if self.start:
-            self._text_file.write(
-                "%f,%f,%f,%d\n" % (
-                joints[0].Position.x, joints[0].Position.y, joints[0].Position.z, joints[0].TrackingState))
-            self._text_file.write(
-                "%f,%f,%f,%d\n" % (
-                joints[1].Position.x, joints[1].Position.y, joints[1].Position.z, joints[1].TrackingState))
-            self._text_file.write(
-                "%f,%f,%f,%d\n" % (
-                joints[2].Position.x, joints[2].Position.y, joints[2].Position.z, joints[2].TrackingState))
-            self._text_file.write(
-                "%f,%f,%f,%d\n" % (
-                joints[3].Position.x, joints[3].Position.y, joints[3].Position.z, joints[3].TrackingState))
-            self._text_file.write(
-                "%f,%f,%f,%d\n" % (
-                joints[4].Position.x, joints[4].Position.y, joints[4].Position.z, joints[4].TrackingState))
-            self._text_file.write(
-                "%f,%f,%f,%d\n" % (
-                joints[5].Position.x, joints[5].Position.y, joints[5].Position.z, joints[5].TrackingState))
-            self._text_file.write(
-                "%f,%f,%f,%d\n" % (
-                joints[6].Position.x, joints[6].Position.y, joints[6].Position.z, joints[6].TrackingState))
-            self._text_file.write(
-                "%f,%f,%f,%d\n" % (
-                joints[7].Position.x, joints[7].Position.y, joints[7].Position.z, joints[7].TrackingState))
-            self._text_file.write(
-                "%f,%f,%f,%d\n" % (
-                joints[8].Position.x, joints[8].Position.y, joints[8].Position.z, joints[8].TrackingState))
-            self._text_file.write(
-                "%f,%f,%f,%d\n" % (
-                joints[9].Position.x, joints[9].Position.y, joints[9].Position.z, joints[9].TrackingState))
-            self._text_file.write("%f,%f,%f,%d\n" % (
-                joints[10].Position.x, joints[10].Position.y, joints[10].Position.z, joints[10].TrackingState))
-            self._text_file.write("%f,%f,%f,%d\n" % (
-                joints[11].Position.x, joints[11].Position.y, joints[11].Position.z, joints[11].TrackingState))
-            self._text_file.write("%f,%f,%f,%d\n" % (
-                joints[12].Position.x, joints[12].Position.y, joints[12].Position.z, joints[12].TrackingState))
-            self._text_file.write("%f,%f,%f,%d\n" % (
-                joints[13].Position.x, joints[13].Position.y, joints[13].Position.z, joints[13].TrackingState))
-            self._text_file.write("%f,%f,%f,%d\n" % (
-                joints[14].Position.x, joints[14].Position.y, joints[14].Position.z, joints[14].TrackingState))
-            self._text_file.write("%f,%f,%f,%d\n" % (
-                joints[15].Position.x, joints[15].Position.y, joints[15].Position.z, joints[15].TrackingState))
-            self._text_file.write("%f,%f,%f,%d\n" % (
-                joints[16].Position.x, joints[16].Position.y, joints[16].Position.z, joints[16].TrackingState))
-            self._text_file.write("%f,%f,%f,%d\n" % (
-                joints[17].Position.x, joints[17].Position.y, joints[17].Position.z, joints[17].TrackingState))
-            self._text_file.write("%f,%f,%f,%d\n" % (
-                joints[18].Position.x, joints[18].Position.y, joints[18].Position.z, joints[18].TrackingState))
-            self._text_file.write("%f,%f,%f,%d\n" % (
-                joints[19].Position.x, joints[19].Position.y, joints[19].Position.z, joints[19].TrackingState))
-            self._text_file.write("%f,%f,%f,%d\n" % (
-                joints[20].Position.x, joints[20].Position.y, joints[20].Position.z, joints[20].TrackingState))
-            self._text_file.write("%f,%f,%f,%d\n" % (
-                joints[21].Position.x, joints[21].Position.y, joints[21].Position.z, joints[21].TrackingState))
-            self._text_file.write("%f,%f,%f,%d\n" % (
-                joints[22].Position.x, joints[22].Position.y, joints[22].Position.z, joints[22].TrackingState))
-            self._text_file.write("%f,%f,%f,%d\n" % (
-                joints[23].Position.x, joints[23].Position.y, joints[23].Position.z, joints[23].TrackingState))
-            self._text_file.write("%f,%f,%f,%d\n" % (
-                joints[24].Position.x, joints[24].Position.y, joints[24].Position.z, joints[24].TrackingState))
+            self._text_file.write(self.frame)
 
         # Torso
         self.draw_body_bone(joints, jointPoints, color, PyKinectV2.JointType_Head, PyKinectV2.JointType_Neck);
@@ -212,15 +217,24 @@ class KinectRuntime(object):
                         file_path = str(int(time.time())) + ".avi"  # 导出路径
                         fourcc = cv2.VideoWriter_fourcc('I', '4', '2', '0')
                         self.video = cv2.VideoWriter(file_path, fourcc, fps, size)
-                    if event.key == pygame.K_SPACE:  # 按空格結束
+                        break
+                    elif event.key == pygame.K_SPACE:  # 按空格結束
                         print("Stop!")
                         self.start = False
                         self._text_file.close()
                         self.video.release()
-                    if event.key == pygame.K_p:  # 按P拍照
+                        break
+                    elif event.key == pygame.K_p:  # 按P拍照
                         fname = "pic_%d.png" % self.pic_num
+                        fname_txt = "Snaps/pic_%d.txt" % self.pic_num
+                        pic = open(fname_txt, mode='w')
+                        pic.write(self.frame)
+                        pic.close()
                         pygame.image.save(self._screen, fname)
-                        self.file_num = self.file_num + 1
+                        print("picture: ", self.pic_num)
+                        self.pic_num = self.pic_num + 1
+                        break
+
 
             # --- Game logic should go here
 
