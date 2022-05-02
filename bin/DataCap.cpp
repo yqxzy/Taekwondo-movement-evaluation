@@ -152,63 +152,62 @@ int main(void)
                     {
                         if (startFlag)//如果录制中，就写入骨架坐标
                         {
-                            ofs << "frame: " << frame << endl;
-                            ofs << "0," << myJointArr[0].Position.X << "," << myJointArr[0].Position.Y << "," << myJointArr[0].Position.Z << endl;
-                            ofs << "1," << myJointArr[1].Position.X << "," << myJointArr[1].Position.Y << "," << myJointArr[1].Position.Z << endl;
-                            ofs << "2," << myJointArr[2].Position.X << "," << myJointArr[2].Position.Y << "," << myJointArr[2].Position.Z << endl;
-                            ofs << "3," << myJointArr[3].Position.X << "," << myJointArr[3].Position.Y << "," << myJointArr[3].Position.Z << endl;
-                            ofs << "4," << myJointArr[4].Position.X << "," << myJointArr[4].Position.Y << "," << myJointArr[4].Position.Z << endl;
-                            ofs << "5," << myJointArr[5].Position.X << "," << myJointArr[5].Position.Y << "," << myJointArr[5].Position.Z << endl;
-                            ofs << "6," << myJointArr[6].Position.X << "," << myJointArr[6].Position.Y << "," << myJointArr[6].Position.Z << endl;
-                            ofs << "7," << myJointArr[7].Position.X << "," << myJointArr[7].Position.Y << "," << myJointArr[7].Position.Z << endl;
-                            ofs << "8," << myJointArr[8].Position.X << "," << myJointArr[8].Position.Y << "," << myJointArr[8].Position.Z << endl;
-                            ofs << "9," << myJointArr[9].Position.X << "," << myJointArr[9].Position.Y << "," << myJointArr[9].Position.Z << endl;
-                            ofs << "10," << myJointArr[10].Position.X << "," << myJointArr[10].Position.Y << "," << myJointArr[10].Position.Z << endl;
-                            ofs << "11," << myJointArr[11].Position.X << "," << myJointArr[11].Position.Y << "," << myJointArr[11].Position.Z << endl;
-                            ofs << "12," << myJointArr[12].Position.X << "," << myJointArr[12].Position.Y << "," << myJointArr[12].Position.Z << endl;
-                            ofs << "13," << myJointArr[13].Position.X << "," << myJointArr[13].Position.Y << "," << myJointArr[13].Position.Z << endl;
-                            ofs << "14," << myJointArr[14].Position.X << "," << myJointArr[14].Position.Y << "," << myJointArr[14].Position.Z << endl;
-                            ofs << "15," << myJointArr[15].Position.X << "," << myJointArr[15].Position.Y << "," << myJointArr[15].Position.Z << endl;
-                            ofs << "16," << myJointArr[16].Position.X << "," << myJointArr[16].Position.Y << "," << myJointArr[16].Position.Z << endl;
-                            ofs << "17," << myJointArr[17].Position.X << "," << myJointArr[17].Position.Y << "," << myJointArr[17].Position.Z << endl;
-                            ofs << "18," << myJointArr[18].Position.X << "," << myJointArr[18].Position.Y << "," << myJointArr[18].Position.Z << endl;
-                            ofs << "19," << myJointArr[19].Position.X << "," << myJointArr[19].Position.Y << "," << myJointArr[19].Position.Z << endl;
-                            ofs << "20," << myJointArr[20].Position.X << "," << myJointArr[20].Position.Y << "," << myJointArr[20].Position.Z << endl;
-                            ofs << "21," << myJointArr[21].Position.X << "," << myJointArr[21].Position.Y << "," << myJointArr[21].Position.Z << endl;
-                            ofs << "22," << myJointArr[22].Position.X << "," << myJointArr[22].Position.Y << "," << myJointArr[22].Position.Z << endl;
-                            ofs << "23," << myJointArr[23].Position.X << "," << myJointArr[23].Position.Y << "," << myJointArr[23].Position.Z << endl;
-                            ofs << "24," << myJointArr[24].Position.X << "," << myJointArr[24].Position.Y << "," << myJointArr[24].Position.Z << endl;
+                            ofs << myJointArr[0].Position.X << myJointArr[0].Position.Y << myJointArr[0].Position.Z <<myJointArr[0].TrackingState << endl;
+                            ofs << myJointArr[1].Position.X << myJointArr[1].Position.Y << myJointArr[1].Position.Z <<myJointArr[1].TrackingState << endl;
+                            ofs << myJointArr[2].Position.X << myJointArr[2].Position.Y << myJointArr[2].Position.Z <<myJointArr[2].TrackingState << endl;
+                            ofs << myJointArr[3].Position.X << myJointArr[3].Position.Y << myJointArr[3].Position.Z <<myJointArr[3].TrackingState << endl;
+                            ofs << myJointArr[4].Position.X << myJointArr[4].Position.Y << myJointArr[4].Position.Z <<myJointArr[4].TrackingState << endl;
+                            ofs << myJointArr[5].Position.X << myJointArr[5].Position.Y << myJointArr[5].Position.Z <<myJointArr[5].TrackingState << endl;
+                            ofs << myJointArr[6].Position.X << myJointArr[6].Position.Y << myJointArr[6].Position.Z <<myJointArr[6].TrackingState << endl;
+                            ofs << myJointArr[7].Position.X << myJointArr[7].Position.Y << myJointArr[7].Position.Z <<myJointArr[7].TrackingState << endl;
+                            ofs << myJointArr[8].Position.X << myJointArr[8].Position.Y << myJointArr[8].Position.Z <<myJointArr[8].TrackingState << endl;
+                            ofs << myJointArr[9].Position.X << myJointArr[9].Position.Y << myJointArr[9].Position.Z <<myJointArr[9].TrackingState << endl;
+                            ofs << myJointArr[10].Position.X << myJointArr[10].Position.Y << myJointArr[10].Position.Z <<myJointArr[10].TrackingState << endl;
+                            ofs << myJointArr[11].Position.X << myJointArr[11].Position.Y << myJointArr[11].Position.Z <<myJointArr[11].TrackingState << endl;
+                            ofs << myJointArr[12].Position.X << myJointArr[12].Position.Y << myJointArr[12].Position.Z <<myJointArr[12].TrackingState << endl;
+                            ofs << myJointArr[13].Position.X << myJointArr[13].Position.Y << myJointArr[13].Position.Z <<myJointArr[13].TrackingState << endl;
+                            ofs << myJointArr[14].Position.X << myJointArr[14].Position.Y << myJointArr[14].Position.Z <<myJointArr[14].TrackingState << endl;
+                            ofs << myJointArr[15].Position.X << myJointArr[15].Position.Y << myJointArr[15].Position.Z <<myJointArr[15].TrackingState << endl;
+                            ofs << myJointArr[16].Position.X << myJointArr[16].Position.Y << myJointArr[16].Position.Z <<myJointArr[16].TrackingState << endl;
+                            ofs << myJointArr[17].Position.X << myJointArr[17].Position.Y << myJointArr[17].Position.Z <<myJointArr[17].TrackingState << endl;
+                            ofs << myJointArr[18].Position.X << myJointArr[18].Position.Y << myJointArr[18].Position.Z <<myJointArr[18].TrackingState << endl;
+                            ofs << myJointArr[19].Position.X << myJointArr[19].Position.Y << myJointArr[19].Position.Z <<myJointArr[19].TrackingState << endl;
+                            ofs << myJointArr[20].Position.X << myJointArr[20].Position.Y << myJointArr[20].Position.Z <<myJointArr[20].TrackingState << endl;
+                            ofs << myJointArr[21].Position.X << myJointArr[21].Position.Y << myJointArr[21].Position.Z <<myJointArr[21].TrackingState << endl;
+                            ofs << myJointArr[22].Position.X << myJointArr[22].Position.Y << myJointArr[22].Position.Z <<myJointArr[22].TrackingState << endl;
+                            ofs << myJointArr[23].Position.X << myJointArr[23].Position.Y << myJointArr[23].Position.Z <<myJointArr[23].TrackingState << endl;
+                            ofs << myJointArr[24].Position.X << myJointArr[24].Position.Y << myJointArr[24].Position.Z <<myJointArr[24].TrackingState << endl;
 
                         }
                         if (pictureFlag) {
                             ofstream ofs1;//创建骨架节点坐标文件
                             ofs1.open("pictureNode"+ to_string(pictureCount) + ".txt", ios::out);
-                            ofs1 << "0," << myJointArr[0].Position.X << "," << myJointArr[0].Position.Y << "," << myJointArr[0].Position.Z << endl;
-                            ofs1 << "1," << myJointArr[1].Position.X << "," << myJointArr[1].Position.Y << "," << myJointArr[1].Position.Z << endl;
-                            ofs1 << "2," << myJointArr[2].Position.X << "," << myJointArr[2].Position.Y << "," << myJointArr[2].Position.Z << endl;
-                            ofs1 << "3," << myJointArr[3].Position.X << "," << myJointArr[3].Position.Y << "," << myJointArr[3].Position.Z << endl;
-                            ofs1 << "4," << myJointArr[4].Position.X << "," << myJointArr[4].Position.Y << "," << myJointArr[4].Position.Z << endl;
-                            ofs1 << "5," << myJointArr[5].Position.X << "," << myJointArr[5].Position.Y << "," << myJointArr[5].Position.Z << endl;
-                            ofs1 << "6," << myJointArr[6].Position.X << "," << myJointArr[6].Position.Y << "," << myJointArr[6].Position.Z << endl;
-                            ofs1 << "7," << myJointArr[7].Position.X << "," << myJointArr[7].Position.Y << "," << myJointArr[7].Position.Z << endl;
-                            ofs1 << "8," << myJointArr[8].Position.X << "," << myJointArr[8].Position.Y << "," << myJointArr[8].Position.Z << endl;
-                            ofs1 << "9," << myJointArr[9].Position.X << "," << myJointArr[9].Position.Y << "," << myJointArr[9].Position.Z << endl;
-                            ofs1 << "10," << myJointArr[10].Position.X << "," << myJointArr[10].Position.Y << "," << myJointArr[10].Position.Z << endl;
-                            ofs1 << "11," << myJointArr[11].Position.X << "," << myJointArr[11].Position.Y << "," << myJointArr[11].Position.Z << endl;
-                            ofs1 << "12," << myJointArr[12].Position.X << "," << myJointArr[12].Position.Y << "," << myJointArr[12].Position.Z << endl;
-                            ofs1 << "13," << myJointArr[13].Position.X << "," << myJointArr[13].Position.Y << "," << myJointArr[13].Position.Z << endl;
-                            ofs1 << "14," << myJointArr[14].Position.X << "," << myJointArr[14].Position.Y << "," << myJointArr[14].Position.Z << endl;
-                            ofs1 << "15," << myJointArr[15].Position.X << "," << myJointArr[15].Position.Y << "," << myJointArr[15].Position.Z << endl;
-                            ofs1 << "16," << myJointArr[16].Position.X << "," << myJointArr[16].Position.Y << "," << myJointArr[16].Position.Z << endl;
-                            ofs1 << "17," << myJointArr[17].Position.X << "," << myJointArr[17].Position.Y << "," << myJointArr[17].Position.Z << endl;
-                            ofs1 << "18," << myJointArr[18].Position.X << "," << myJointArr[18].Position.Y << "," << myJointArr[18].Position.Z << endl;
-                            ofs1 << "19," << myJointArr[19].Position.X << "," << myJointArr[19].Position.Y << "," << myJointArr[19].Position.Z << endl;
-                            ofs1 << "20," << myJointArr[20].Position.X << "," << myJointArr[20].Position.Y << "," << myJointArr[20].Position.Z << endl;
-                            ofs1 << "21," << myJointArr[21].Position.X << "," << myJointArr[21].Position.Y << "," << myJointArr[21].Position.Z << endl;
-                            ofs1 << "22," << myJointArr[22].Position.X << "," << myJointArr[22].Position.Y << "," << myJointArr[22].Position.Z << endl;
-                            ofs1 << "23," << myJointArr[23].Position.X << "," << myJointArr[23].Position.Y << "," << myJointArr[23].Position.Z << endl;
-                            ofs1 << "24," << myJointArr[24].Position.X << "," << myJointArr[24].Position.Y << "," << myJointArr[24].Position.Z << endl;
-
+                            ofs1 << myJointArr[0].Position.X << myJointArr[0].Position.Y << myJointArr[0].Position.Z <<myJointArr[0].TrackingState << endl;
+                            ofs1 << myJointArr[1].Position.X << myJointArr[1].Position.Y << myJointArr[1].Position.Z <<myJointArr[1].TrackingState << endl;
+                            ofs1 << myJointArr[2].Position.X << myJointArr[2].Position.Y << myJointArr[2].Position.Z <<myJointArr[2].TrackingState << endl;
+                            ofs1 << myJointArr[3].Position.X << myJointArr[3].Position.Y << myJointArr[3].Position.Z <<myJointArr[3].TrackingState << endl;
+                            ofs1 << myJointArr[4].Position.X << myJointArr[4].Position.Y << myJointArr[4].Position.Z <<myJointArr[4].TrackingState << endl;
+                            ofs1 << myJointArr[5].Position.X << myJointArr[5].Position.Y << myJointArr[5].Position.Z <<myJointArr[5].TrackingState << endl;
+                            ofs1 << myJointArr[6].Position.X << myJointArr[6].Position.Y << myJointArr[6].Position.Z <<myJointArr[6].TrackingState << endl;
+                            ofs1 << myJointArr[7].Position.X << myJointArr[7].Position.Y << myJointArr[7].Position.Z <<myJointArr[7].TrackingState << endl;
+                            ofs1 << myJointArr[8].Position.X << myJointArr[8].Position.Y << myJointArr[8].Position.Z <<myJointArr[8].TrackingState << endl;
+                            ofs1 << myJointArr[9].Position.X << myJointArr[9].Position.Y << myJointArr[9].Position.Z <<myJointArr[9].TrackingState << endl;
+                            ofs1 << myJointArr[10].Position.X << myJointArr[10].Position.Y << myJointArr[10].Position.Z <<myJointArr[10].TrackingState << endl;
+                            ofs1 << myJointArr[11].Position.X << myJointArr[11].Position.Y << myJointArr[11].Position.Z <<myJointArr[11].TrackingState << endl;
+                            ofs1 << myJointArr[12].Position.X << myJointArr[12].Position.Y << myJointArr[12].Position.Z <<myJointArr[12].TrackingState << endl;
+                            ofs1 << myJointArr[13].Position.X << myJointArr[13].Position.Y << myJointArr[13].Position.Z <<myJointArr[13].TrackingState << endl;
+                            ofs1 << myJointArr[14].Position.X << myJointArr[14].Position.Y << myJointArr[14].Position.Z <<myJointArr[14].TrackingState << endl;
+                            ofs1 << myJointArr[15].Position.X << myJointArr[15].Position.Y << myJointArr[15].Position.Z <<myJointArr[15].TrackingState << endl;
+                            ofs1 << myJointArr[16].Position.X << myJointArr[16].Position.Y << myJointArr[16].Position.Z <<myJointArr[16].TrackingState << endl;
+                            ofs1 << myJointArr[17].Position.X << myJointArr[17].Position.Y << myJointArr[17].Position.Z <<myJointArr[17].TrackingState << endl;
+                            ofs1 << myJointArr[18].Position.X << myJointArr[18].Position.Y << myJointArr[18].Position.Z <<myJointArr[18].TrackingState << endl;
+                            ofs1 << myJointArr[19].Position.X << myJointArr[19].Position.Y << myJointArr[19].Position.Z <<myJointArr[19].TrackingState << endl;
+                            ofs1 << myJointArr[20].Position.X << myJointArr[20].Position.Y << myJointArr[20].Position.Z <<myJointArr[20].TrackingState << endl;
+                            ofs1 << myJointArr[21].Position.X << myJointArr[21].Position.Y << myJointArr[21].Position.Z <<myJointArr[21].TrackingState << endl;
+                            ofs1 << myJointArr[22].Position.X << myJointArr[22].Position.Y << myJointArr[22].Position.Z <<myJointArr[22].TrackingState << endl;
+                            ofs1 << myJointArr[23].Position.X << myJointArr[23].Position.Y << myJointArr[23].Position.Z <<myJointArr[23].TrackingState << endl;
+                            ofs1 << myJointArr[24].Position.X << myJointArr[24].Position.Y << myJointArr[24].Position.Z <<myJointArr[24].TrackingState << endl;
+                            ofs1.close();
                         }
 
                         draw(copy, myJointArr[JointType_Head], myJointArr[JointType_Neck], myMapper);
