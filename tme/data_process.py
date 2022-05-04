@@ -3,7 +3,7 @@ import math
 
 
 def Bursa(data_C, data_D):
-    point = [0, 1, 5, 9, 13, 17]
+    point = [0, 1, 2, 3, 20, 13, 5]
     L = []
     B = np.empty((0, 7))
     for i in range(len(point)):
@@ -61,10 +61,10 @@ def fuse_data(data1, data2):
         for j in range(25):
             if data1[i, j, 3] > data2[i, j, 3]:
                 for k in range(4):
-                    data[i, j, k] = data1[i, j, k]
+                    data[i, j, k] = data2[i, j, k]
             else:
                 for k in range(4):
-                    data[i, j, k] = data2[i, j, k]
+                    data[i, j, k] = data1[i, j, k]
     return data
 
 
