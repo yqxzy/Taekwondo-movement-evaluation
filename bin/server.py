@@ -233,17 +233,18 @@ class KinectServer(object):
                 if self._kinect.has_new_body_frame():
                     self._bodies = self._kinect.get_last_body_frame()
 
+                print(1)
                 # --- draw skeletons to _frame_surface
                 if self._bodies is not None:
-                    # for i in range(0, self._kinect.max_body_count):
-                    body = self._bodies.bodies[0]
-                    if not body.is_tracked:
-                        continue
-
-                    joints = body.joints
-                    # convert joint coordinates to color space
-                    joint_points = self._kinect.body_joints_to_color_space(joints)
-                    self.draw_body(joints, joint_points, SKELETON_COLORS[0])
+                    for i in range(0, self._kinect.max_body_count):
+                        body = self._bodies.bodies[i]
+                        if not body.is_tracked:
+                            continue
+                        joints = body.joints
+                        # convert joint coordinates to color space
+                        joint_points = self._kinect.body_joints_to_color_space(joints)
+                        self.draw_body(joints, joint_points, SKELETON_COLORS[i])
+                print(3)
 
                 # --- copy back buffer surface pixels to the screen, resize it if needed and keep aspect ratio
                 # --- (screen size may be different from Kinect's color frame size)

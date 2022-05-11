@@ -1,4 +1,5 @@
 import ctypes
+import struct
 import sys
 import time
 from socket import *
@@ -42,7 +43,7 @@ class KinectClient(object):
         self._bodies = None
         self.sock = socket(AF_INET, SOCK_STREAM)
         try:
-            self.sock.connect(('127.0.0.1', 1111))
+            self.sock.connect(('192.168.0.4', 1111))
             print('Connected')
         except Exception as e:
             print('Connection failed: ', e)
@@ -71,68 +72,12 @@ class KinectClient(object):
     def draw_body(self, joints, jointPoints, color):
         # save position
         data = ""
-        data += (
-                "%f,%f,%f,%d\n" % (
-                joints[0].Position.x, joints[0].Position.y, joints[0].Position.z, joints[0].TrackingState))
-        data += (
-                "%f,%f,%f,%d\n" % (
-                joints[1].Position.x, joints[1].Position.y, joints[1].Position.z, joints[1].TrackingState))
-        data += (
-                "%f,%f,%f,%d\n" % (
-                joints[2].Position.x, joints[2].Position.y, joints[2].Position.z, joints[2].TrackingState))
-        data += (
-                "%f,%f,%f,%d\n" % (
-                joints[3].Position.x, joints[3].Position.y, joints[3].Position.z, joints[3].TrackingState))
-        data += (
-                "%f,%f,%f,%d\n" % (
-                joints[4].Position.x, joints[4].Position.y, joints[4].Position.z, joints[4].TrackingState))
-        data += (
-                "%f,%f,%f,%d\n" % (
-                joints[5].Position.x, joints[5].Position.y, joints[5].Position.z, joints[5].TrackingState))
-        data += (
-                "%f,%f,%f,%d\n" % (
-                joints[6].Position.x, joints[6].Position.y, joints[6].Position.z, joints[6].TrackingState))
-        data += (
-                "%f,%f,%f,%d\n" % (
-                joints[7].Position.x, joints[7].Position.y, joints[7].Position.z, joints[7].TrackingState))
-        data += (
-                "%f,%f,%f,%d\n" % (
-                joints[8].Position.x, joints[8].Position.y, joints[8].Position.z, joints[8].TrackingState))
-        data += (
-                "%f,%f,%f,%d\n" % (
-                joints[9].Position.x, joints[9].Position.y, joints[9].Position.z, joints[9].TrackingState))
-        data += ("%f,%f,%f,%d\n" % (
-                joints[10].Position.x, joints[10].Position.y, joints[10].Position.z, joints[10].TrackingState))
-        data += ("%f,%f,%f,%d\n" % (
-                joints[11].Position.x, joints[11].Position.y, joints[11].Position.z, joints[11].TrackingState))
-        data += ("%f,%f,%f,%d\n" % (
-                joints[12].Position.x, joints[12].Position.y, joints[12].Position.z, joints[12].TrackingState))
-        data += ("%f,%f,%f,%d\n" % (
-                joints[13].Position.x, joints[13].Position.y, joints[13].Position.z, joints[13].TrackingState))
-        data += ("%f,%f,%f,%d\n" % (
-                joints[14].Position.x, joints[14].Position.y, joints[14].Position.z, joints[14].TrackingState))
-        data += ("%f,%f,%f,%d\n" % (
-                joints[15].Position.x, joints[15].Position.y, joints[15].Position.z, joints[15].TrackingState))
-        data += ("%f,%f,%f,%d\n" % (
-                joints[16].Position.x, joints[16].Position.y, joints[16].Position.z, joints[16].TrackingState))
-        data += ("%f,%f,%f,%d\n" % (
-                joints[17].Position.x, joints[17].Position.y, joints[17].Position.z, joints[17].TrackingState))
-        data += ("%f,%f,%f,%d\n" % (
-                joints[18].Position.x, joints[18].Position.y, joints[18].Position.z, joints[18].TrackingState))
-        data += ("%f,%f,%f,%d\n" % (
-                joints[19].Position.x, joints[19].Position.y, joints[19].Position.z, joints[19].TrackingState))
-        data += ("%f,%f,%f,%d\n" % (
-                joints[20].Position.x, joints[20].Position.y, joints[20].Position.z, joints[20].TrackingState))
-        data += ("%f,%f,%f,%d\n" % (
-                joints[21].Position.x, joints[21].Position.y, joints[21].Position.z, joints[21].TrackingState))
-        data += ("%f,%f,%f,%d\n" % (
-                joints[22].Position.x, joints[22].Position.y, joints[22].Position.z, joints[22].TrackingState))
-        data += ("%f,%f,%f,%d\n" % (
-                joints[23].Position.x, joints[23].Position.y, joints[23].Position.z, joints[23].TrackingState))
-        data += ("%f,%f,%f,%d\n" % (
-                joints[24].Position.x, joints[24].Position.y, joints[24].Position.z, joints[24].TrackingState))
+        for i in range(25):
+            data += ("%f,%f,%f,%d\n" % (
+            joints[i].Position.x, joints[i].Position.y, joints[i].Position.z, joints[i].TrackingState))
 
-        self.sock.send(data.encode())
+        self.sock.sendall(struct.pack("Q", len(data.encode())) + data.encode())
+        time.sleep(0.1)
 
         # Torso
         self.draw_body_bone(joints, jointPoints, color, PyKinectV2.JointType_Head, PyKinectV2.JointType_Neck);
@@ -249,5 +194,3 @@ __main__ = "TME"
 
 game = KinectClient();
 game.run();
-
-
