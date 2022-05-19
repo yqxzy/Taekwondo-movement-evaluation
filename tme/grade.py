@@ -2,6 +2,7 @@ import math
 
 import pandas as pd
 from partition import compute_difference
+from data_process import get_angle
 
 
 def score(data):
@@ -87,6 +88,9 @@ def score_act2(frame, data, angle_list):
         m = - 0.1
     if data[frame[1], 19, 0] - data[frame[1], 15, 0] > 0.3 or data[frame[1], 19, 0] - data[frame[1], 15, 0] < 0.2:
         m -= 0.1
+    left_hand_angle = get_angle(data[frame[1], 20, :], data[frame[1], 8, :], data[frame[1], 9, :])
+    if left_hand_angle > 140 or left_hand_angle < 90:
+        m -= 0.1
     m = ('%.1f' % m)
     score_list.append(m)
 
@@ -131,6 +135,9 @@ def score_act4(frame, data, angle_list):
     if abs(data[frame[1], 11, 0] - wrist_x) > 0.05 or abs(data[frame[1], 11, 1] - wrist_y) > 0.1:
         m = - 0.1
     if data[frame[1], 15, 0] - data[frame[1], 15, 0] > 0.3 or data[frame[1], 19, 0] - data[frame[1], 15, 0] < 0.2:
+        m -= 0.1
+    right_hand_angle = get_angle(data[frame[1], 20, :], data[frame[1], 4, :], data[frame[1], 5, :])
+    if right_hand_angle > 140 or right_hand_angle < 90:
         m -= 0.1
     m = ('%.1f' % m)
     score_list.append(m)
@@ -200,6 +207,10 @@ def score_act6(frame, data, angle_list):
     feet_distance = abs(data[frame[1], 19, 2] - data[frame[1], 15, 2])
     if feet_distance > 0.3 or feet_distance < 0.2:
         m -= 0.1
+    # Left-hand angle
+    left_hand_angle = get_angle(data[frame[1], 20, :], data[frame[1], 8, :], data[frame[1], 9, :])
+    if left_hand_angle > 140 or left_hand_angle < 90:
+        m -= 0.1
     m = ('%.1f' % m)
     score_list.append(m)
 
@@ -228,11 +239,15 @@ def score_act7(frame, data, angle_list):
 def score_act8(frame, data, angle_list):
     score_list = []
 
-    # 1. 右拳, 脚不变
+    # 1. 右拳, 脚不变，左臂角度
     # Right-hand punch
     if abs(data[frame[0], 7, 0] - data[frame[0], 1, 0]) > 0.1 or abs(
             data[frame[0], 7, 1] - data[frame[0], 1, 1]) > 0.1:
         m = -0.1
+    # Left-hand angle
+    left_hand_angle = get_angle(data[frame[0], 20, :], data[frame[0], 8, :], data[frame[0], 9, :])
+    if left_hand_angle > 200 or left_hand_angle < 160:
+        m -= 0.1
     m = ('%.1f' % m)
     score_list.append(m)
 
@@ -245,6 +260,10 @@ def score_act8(frame, data, angle_list):
     # Feet distance (Right feet in front)
     feet_distance = abs(data[frame[1], 15, 0] - data[frame[1], 19, 0])
     if feet_distance > 0.3 or feet_distance < 0.2:
+        m -= 0.1
+    # Left-hand angle
+    left_hand_angle = get_angle(data[frame[1], 20, :], data[frame[1], 8, :], data[frame[1], 9, :])
+    if left_hand_angle > 140 or left_hand_angle < 90:
         m -= 0.1
     m = ('%.1f' % m)
     score_list.append(m)
@@ -306,6 +325,10 @@ def score_act10(frame, data, angle_list):
     # Left-heel lift
     if data[frame[0], 18, 1] - data[frame[0], 19, 1] <= 0:
         m -= 0.1
+    # Right-hand angle
+    right_hand_angle = get_angle(data[frame[0], 20, :], data[frame[0], 4, :], data[frame[0], 5, :])
+    if right_hand_angle > 200 or right_hand_angle < 160:
+        m -= 0.1
     m = ('%.1f' % m)
     score_list.append(m)
 
@@ -318,6 +341,10 @@ def score_act10(frame, data, angle_list):
     # Feet distance (Left feet in front)
     feet_distance = abs(data[frame[1], 19, 0] - data[frame[1], 15, 0])
     if feet_distance > 0.3 or feet_distance < 0.2:
+        m -= 0.1
+    # Right-hand angle
+    right_hand_angle = get_angle(data[frame[1], 20, :], data[frame[1], 4, :], data[frame[1], 5, :])
+    if right_hand_angle > 140 or right_hand_angle < 90:
         m -= 0.1
     m = ('%.1f' % m)
     score_list.append(m)
@@ -370,15 +397,23 @@ def score_act12(frame, data, angle_list):
     m = ('%.1f' % m)
     score_list.append(m)
 
-    # 2. 左手(左)腰部, 右手角度, 两脚隔一个脚长
+    # 2. 左手(左)腰部, 右手角度, 两脚隔一个脚长, 右腿弓步角度
     # Left-hand on left-waist
     wrist_x, wrist_y = data[frame[1], 8, 0], (data[frame[1], 0, 0] + data[frame[1], 1, 0]) / 2 - 0.05
     m = 0
     if abs(data[frame[1], 11, 0] - wrist_x) > 0.05 or abs(data[frame[1], 11, 1] - wrist_y) > 0.1:
         m = -0.1
+    # Right-hand angle
+    right_hand_angle = get_angle(data[frame[1], 20, :], data[frame[1], 4, :], data[frame[1], 5, :])
+    if right_hand_angle > 140 or right_hand_angle < 90:
+        m -= 0.1
     # Feet distance (Right feet in front)
     feet_distance = abs(data[frame[1], 15, 2] - data[frame[1], 19, 2])
     if feet_distance > 0.3 or feet_distance < 0.2:
+        m -= 0.1
+    # Right-leg angle
+    right_leg_angle = get_angle(data[frame[1], 12, :], data[frame[1], 13, :], data[frame[1], 14, :])
+    if right_leg_angle > 120 or right_leg_angle < 80:
         m -= 0.1
     m = ('%.1f' % m)
     score_list.append(m)
@@ -430,6 +465,10 @@ def score_act14(frame, data, angle_list):
     feet_distance = abs(data[frame[1], 19, 0] - data[frame[1], 15, 0])
     if feet_distance > 0.3 or feet_distance < 0.2:
         m -= 0.1
+    # Left-hand angle
+    left_hand_angle = get_angle(data[frame[1], 20, :], data[frame[1], 8, :], data[frame[1], 9, :])
+    if left_hand_angle > 280 or left_hand_angle < 220:
+        m -= 0.1
     m = ('%.1f' % m)
     score_list.append(m)
 
@@ -447,6 +486,14 @@ def score_act15(frame, data, angle_list):
     if (abs(data[frame[0], 7, 1] - upper_waist_y)) > 0.1 or (
             abs(data[frame[0], 11, 1] - upper_waist_y) > 0.1):
         m = -0.1
+    # Right-leg angle
+    right_leg_angle = get_angle(data[frame[0], 12, :], data[frame[0], 13, :], data[frame[0], 14, :])
+    if right_leg_angle > 100 or right_leg_angle < 60:
+        m -= 0.1
+    # Left-leg angle
+    left_leg_angle = get_angle(data[frame[0], 16, :], data[frame[0], 17, :], data[frame[0], 18, :])
+    if left_leg_angle > 190 or left_leg_angle < 170:
+        m -= 0.1
     m = ('%.1f' % m)
     score_list.append(m)
 
@@ -454,6 +501,14 @@ def score_act15(frame, data, angle_list):
     # Right feet higher than shoulder
     m = 0
     if data[frame[1], 15, 1] < data[frame[1], 4, 1]:
+        m -= 0.1
+    # Right-leg angle
+    right_leg_angle = get_angle(data[frame[1], 0, :], data[frame[1], 12, :], data[frame[1], 13, :])
+    if right_leg_angle > 190 or right_leg_angle < 170:
+        m -= 0.1
+    # Left-leg angle
+    left_leg_angle = get_angle(data[frame[1], 16, :], data[frame[1], 17, :], data[frame[1], 18, :])
+    if left_leg_angle > 190 or left_leg_angle < 170:
         m -= 0.1
     m = ('%.1f' % m)
     score_list.append(m)
@@ -467,6 +522,14 @@ def score_act15(frame, data, angle_list):
     # Left-hand punch
     if abs(data[frame[2], 11, 1] - data[frame[2], 1, 1]) > 0.1 or abs(
             data[frame[2], 11, 0] - data[frame[2], 1, 0]) > 0.1:
+        m -= 0.1
+    # Right-leg angle
+    right_leg_angle = get_angle(data[frame[2], 12, :], data[frame[2], 13, :], data[frame[2], 14, :])
+    if right_leg_angle > 100 or right_leg_angle < 60:
+        m -= 0.1
+    # Left-leg angle
+    left_leg_angle = get_angle(data[frame[2], 16, :], data[frame[2], 17, :], data[frame[2], 18, :])
+    if left_leg_angle > 190 or left_leg_angle < 170:
         m -= 0.1
     m = ('%.1f' % m)
     score_list.append(m)
@@ -512,6 +575,10 @@ def score_act16(frame, data, angle_list):
     m = 0
     if abs(data[frame[1], 11, 0] - waist_x) > 0.05 or abs(data[frame[1], 11, 1] - waist_y) > 0.1:
         m = - 0.1
+    # Right-hand angle
+    right_hand_angle = get_angle(data[frame[1], 20, :], data[frame[1], 4, :], data[frame[1], 5, :])
+    if right_hand_angle > 270 or right_hand_angle < 220:
+        m -= 0.1
     # Feet distance (Right feet in front)
     feet_distance = abs(data[frame[1], 15, 0] - data[frame[1], 19, 0])
     if feet_distance > 0.3 or feet_distance < 0.2:
@@ -533,6 +600,14 @@ def score_act17(frame, data, angle_list):
     if (abs(data[frame[0], 7, 1] - upper_waist_y)) > 0.1 or (
             abs(data[frame[0], 11, 1] - upper_waist_y) > 0.1):
         m = -0.1
+    # Right-leg angle
+    right_leg_angle = get_angle(data[frame[0], 12, :], data[frame[0], 13, :], data[frame[0], 14, :])
+    if right_leg_angle > 190 or right_leg_angle < 170:
+        m -= 0.1
+    # Left-leg angle
+    left_leg_angle = get_angle(data[frame[0], 16, :], data[frame[0], 17, :], data[frame[0], 18, :])
+    if left_leg_angle > 100 or left_leg_angle < 60:
+        m -= 0.1
     m = ('%.1f' % m)
     score_list.append(m)
 
@@ -540,6 +615,14 @@ def score_act17(frame, data, angle_list):
     # Left feet higher than shoulder
     m = 0
     if data[frame[1], 19, 1] < data[frame[1], 8, 1]:
+        m -= 0.1
+    # Right-leg angle
+    right_leg_angle = get_angle(data[frame[1], 12, :], data[frame[1], 13, :], data[frame[1], 14, :])
+    if right_leg_angle > 190 or right_leg_angle < 170:
+        m -= 0.1
+    # Left-leg angle
+    left_leg_angle = get_angle(data[frame[1], 0, :], data[frame[1], 16, :], data[frame[1], 17, :])
+    if left_leg_angle > 190 or left_leg_angle < 170:
         m -= 0.1
     m = ('%.1f' % m)
     score_list.append(m)
@@ -553,6 +636,14 @@ def score_act17(frame, data, angle_list):
     # Right-hand punch
     if abs(data[frame[2], 7, 1] - data[frame[2], 1, 1]) > 0.1 or abs(
             data[frame[2], 7, 0] - data[frame[2], 1, 0]) > 0.1:
+        m -= 0.1
+    # Right-leg angle
+    right_leg_angle = get_angle(data[frame[2], 12, :], data[frame[2], 13, :], data[frame[2], 14, :])
+    if right_leg_angle > 190 or right_leg_angle < 170:
+        m -= 0.1
+    # Left-leg angle
+    left_leg_angle = get_angle(data[frame[2], 16, :], data[frame[2], 17, :], data[frame[2], 18, :])
+    if left_leg_angle > 100 or left_leg_angle < 60:
         m -= 0.1
     m = ('%.1f' % m)
     score_list.append(m)
@@ -598,6 +689,10 @@ def score_act18(frame, data, angle_list):
     m = 0
     if abs(data[frame[1], 7, 0] - waist_x) > 0.05 or abs(data[frame[1], 7, 1] - waist_y) > 0.1:
         m = - 0.1
+    # Left-hand angle
+    left_hand_angle = get_angle(data[frame[1], 20, :], data[frame[1], 8, :], data[frame[1], 9, :])
+    if left_hand_angle > 140 or left_hand_angle < 90:
+        m -= 0.1
     m = ('%.1f' % m)
     score_list.append(m)
 
@@ -617,6 +712,14 @@ def score_act19(frame, data, angle_list):
     if abs(data[frame[0], 7, 1] - data[frame[0], 1, 1]) > 0.1 or abs(
             data[frame[0], 7, 2] - data[frame[0], 1, 2]) > 0.1:
         m -= 0.1
+    # Right-leg angle
+    right_leg_angle = get_angle(data[frame[0], 12, :], data[frame[0], 13, :], data[frame[0], 14, :])
+    if right_leg_angle > 120 or right_leg_angle < 80:
+        m -= 0.1
+    # Left-leg angle
+    left_leg_angle = get_angle(data[frame[0], 16, :], data[frame[0], 17, :], data[frame[0], 18, :])
+    if left_leg_angle > 190 or left_leg_angle < 170:
+        m -= 0.1
     m = ('%.1f' % m)
     score_list.append(m)
 
@@ -634,6 +737,14 @@ def score_act20(frame, data, angle_list):
     if abs(data[frame[0], 15, 0] - data[frame[0], 19, 0]) < 0.3 or abs(
             data[frame[0], 15, 0] - data[frame[0], 19, 0]) > 0.5:
         m = m - 0.1
+    # Right-shoulder angle
+    right_shoulder_angle = get_angle(data[frame[0], 20, :], data[frame[0], 4, :], data[frame[0], 5, :])
+    if right_shoulder_angle > 140 or right_shoulder_angle < 100:
+        m -= 0.1
+    # Left-shoulder angle
+    left_shoulder_angle = get_angle(data[frame[0], 20, :], data[frame[0], 8, :], data[frame[0], 9, :])
+    if left_shoulder_angle > 140 or left_shoulder_angle < 100:
+        m -= 0.1
     m = ('%.1f' % m)
     score_list.append(m)
 
